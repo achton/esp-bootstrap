@@ -4,7 +4,7 @@
 import esp
 import secrets
 
-#esp.osdebug(None)
+esp.osdebug(None)
 
 def do_connect():
     import network
