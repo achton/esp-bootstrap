@@ -2,8 +2,6 @@
 # Distributed under GPLv3+ (see COPYING) WITHOUT ANY WARRANTY.
 
 import esp
-import micropython
-from machine import Pin
 import secrets
 
 #esp.osdebug(None)
