@@ -5,9 +5,7 @@ from micropython import alloc_emergency_exception_buf
 from machine import reset
 import os
 import socket
-import sys
 import uhashlib
-import utime
 
 ###### Constants ######
 # This parameter allows setting a call back function for a listening socket
