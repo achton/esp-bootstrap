@@ -28,7 +28,7 @@ Prerequisites:
 - You need an ESP8266 device. This has been tested on the Wemos D1 Mini & Adafruit Huzzah.
 - The ESP8266 must be running MicroPython. 
 
-Copy `boot.py` and `main.py` to the device's flash. I recommend using [mpfshell](https://github.com/wendlers/mpfshell) to do this.
+Copy `boot.py`, `main.py`, and `config.py` to the device's flash. I recommend using [mpfshell](https://github.com/wendlers/mpfshell) to do this. To enable relevant messages from the updater or during boot (e.g. on wifi connect), edit `config.py` and set `SILENT = False`
 
 Create a `secrets.py` file in the following format, and copy to the device's flash:
 ```

@@ -3,6 +3,7 @@
 
 from micropython import alloc_emergency_exception_buf
 from machine import reset
+import config
 import os
 import socket
 import uhashlib
@@ -28,7 +29,7 @@ def sock_cb(s):
     try:
         # read checksum from sender
         checksum_orig = client.read(CHECKSUM_SIZE)
-        #print("Checksum received:")
+        #print_c("Checksum received:")
         #print_hex(checksum_orig)
         with open(TMP_FILENAME, 'w') as f:
             chunk = client.read(CHUNK_SIZE)
@@ -36,18 +37,19 @@ def sock_cb(s):
                 f.write(chunk.decode())
                 chunk = client.read(CHUNK_SIZE)
     except Exception as e:
-        print("exception: {0}".format(e))
+        print_c("exception: {0}".format(e))
     finally:
         client.close()
 
     checksum = chksum_file(TMP_FILENAME)
-    #print("Checksum:")
+    #print_c("Checksum:")
     #print_hex(checksum)
     if checksum != checksum_orig:
-        print("Checksum: FAILED")
-        print("User app NOT updated")
+        print_c("Checksum: FAILED")
+        print_c("User app NOT updated")
         return
-    print("Checksum: OK")
+    if not config.SILENT:
+        print_c("Checksum: OK")
     # Back up old application if it exists
     for f in os.listdir():
         if f == APP_FILENAME:
@@ -70,7 +72,13 @@ def chksum_file(f):
 
 # Print byte array as string of hex characters
 def print_hex(bytez):
-    print(''.join('%02X' % b for b in bytez))
+    print_c(''.join('%02X' % b for b in bytez))
+
+
+# Prints message to console
+def print_c(msg):
+    if not config.SILENT:
+        print(msg)
 
 
 # Set up socket and listen for updates. Here a callback is
@@ -88,4 +96,4 @@ try:
     import app
     app.main()
 except Exception as e:
-    print("Oops, app.py failed for some reason: {0}".format(e))
+    print_c("Oops, app.py failed for some reason: {0}".format(e))

@@ -1,10 +1,12 @@
 # Copyright(c) 2017 by craftyguy "Clayton Craft" <clayton@craftyguy.net>
 # Distributed under GPLv3+ (see COPYING) WITHOUT ANY WARRANTY.
 
+import config
 import esp
 import secrets
 
-esp.osdebug(None)
+if config.SILENT:
+    esp.osdebug(None)
 
 def do_connect():
     import network
@@ -13,11 +15,13 @@ def do_connect():
     if a_if.active():
         a_if.active(False)
     if not s_if.isconnected():
-        #print('connecting to WiFi network...')
         s_if.active(True)
         s_if.connect(secrets.WIFI_SSID, secrets.WIFI_PASSPHRASE)
         while not s_if.isconnected():
             pass
+    if not config.SILENT:
+        print("Wifi connected: ", s_if.ifconfig())
+
 
 do_connect()
 
