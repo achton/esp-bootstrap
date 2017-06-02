@@ -7,6 +7,7 @@ import config
 import os
 import socket
 import uhashlib
+import utime
 
 ###### Constants ######
 # This parameter allows setting a call back function for a listening socket
@@ -97,3 +98,11 @@ try:
     app.main()
 except Exception as e:
     print_c("Oops, app.py failed for some reason: {0}".format(e))
+
+# Go into a holding loop if app.main() returns/crashes
+print_c("app.main() has returned, going into a holding loop until reset or update is received...")
+while True:
+    utime.sleep(1)
+
+# Just in case True != True
+sock.close()
