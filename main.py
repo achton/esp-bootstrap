@@ -103,6 +103,3 @@ except Exception as e:
 print_c("app.main() has returned, going into a holding loop until reset or update is received...")
 while True:
     utime.sleep(1)
-
-# Just in case True != True
-sock.close()
